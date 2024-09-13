@@ -23,12 +23,14 @@ app.use(
                 description: String!
                 price: Float!
                 date: String!
+                creator: User!
             }
 
             type User {
                 _id: ID!
                 email: String!
                 password: String
+                createdEvents: [Event!]
             }
 
             input EventInput {
@@ -59,7 +61,7 @@ app.use(
         `),
         rootValue: {
             events: () => {
-                return Event.find()
+                return Event.find().populate('creator')
                     .then(events => {
                         return events.map(event => {
                             return { ... event._doc, _id: event.id }
