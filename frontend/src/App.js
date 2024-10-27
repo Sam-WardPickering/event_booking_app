@@ -1,21 +1,29 @@
 import './App.css';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import React from 'react';
 
 import AuthPage from './pages/Auth';
 import EventsPage from './pages/Events';
 import BookingsPage from './pages/Bookings';
+import MainNavigation from './components/navigation/MainNavigation';
 
 function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Redirect from="/" to="/auth" exact />
-        <Route path="/auth" component={AuthPage} />
-        <Route path="/events" component={EventsPage} />
-        <Route path="/bookings" component={BookingsPage} />
-      </Switch>
+      <React.Fragment>
+        <MainNavigation />
+        <main>
+          <Routes>
+            <Route path="/" element={<Navigate to="/auth" replace />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/events" element={<EventsPage />} />
+            <Route path="/bookings" element={<BookingsPage />} />
+          </Routes>
+        </main>
+      </React.Fragment>
     </BrowserRouter>
   );
 }
 
 export default App;
+
