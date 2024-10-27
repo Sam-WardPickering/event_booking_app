@@ -12,7 +12,7 @@ function App() {
     <BrowserRouter>
       <React.Fragment>
         <MainNavigation />
-        <main>
+        <main className="main-content">
           <Routes>
             <Route path="/" element={<Navigate to="/auth" replace />} />
             <Route path="/auth" element={<AuthPage />} />
