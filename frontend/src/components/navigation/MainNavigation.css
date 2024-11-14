@@ -32,11 +32,11 @@
 
 .main-navigation__items a {
     text-decoration: none;
-    color: #fff;
+    color: #000;
 
 }
 
 .main-navigation__items a:hover,
 .main-navigation__items a.active {
-    color: #D10101;
+    color: #fff;
 }
