@@ -34,12 +34,12 @@ function App() {
           <MainNavigation />
           <main className="main-content">
             <Routes>
-              {!token && <Route path="/" element={<Navigate to="/auth" replace />} />}
               {token && <Route path="/" element={<Navigate to="/events" replace />} />}
               {token && <Route path="/auth" element={<Navigate to="/events" replace />} />}
               {!token && <Route path="/auth" element={<AuthPage />} />}
               <Route path="/events" element={<EventsPage />} />
               {token && <Route path="/bookings" element={<BookingsPage />} />}
+              {!token && <Route path="*" element={<Navigate to="/auth" replace />} />}
             </Routes>
           </main>
         </AuthContext.Provider>
