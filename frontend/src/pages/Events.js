@@ -116,12 +116,14 @@ class EventsPage extends Component {
                         </form>
                     </Modal>
                 )}
-                <div className="events-control">
-                <p>Share your own events!</p>
-                <button className="btn" onClick={this.startCreateEventHandler}>
-                    Create Event
-                </button>
-            </div>
+                {this.context.token && (
+                    <div className="events-control">
+                        <p>Share your own events!</p>
+                        <button className="btn" onClick={this.startCreateEventHandler}>
+                            Create Event
+                        </button>
+                    </div>
+                )}
             </React.Fragment>
         );
     }
