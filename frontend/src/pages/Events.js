@@ -124,6 +124,10 @@ class EventsPage extends Component {
                         </button>
                     </div>
                 )}
+                <ul className="events__list">
+                    <li className="events__list-item">Test</li>
+                    <li className="events__list-item">Test</li>
+                </ul>
             </React.Fragment>
         );
     }
