@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import Modal from '../components/Modal/Modal';
 import './Events.css';
 import Backdrop from '../components/Backdrop/Backdrop';
+import AuthContext from '../context/auth-context';
 
 class EventsPage extends Component {
 
     state = {
         creating: false
     };
+
+    static contextType = AuthContext;
 
     constructor(props) {
         super(props);
@@ -29,14 +32,57 @@ class EventsPage extends Component {
         const date = this.dateElRef.current.value;
         const description = this.descriptionElRef.current.value;
 
-        if (title.trim().length === 0 || price.trim().length === 0 || date.trim().length === 0 || description.trim().length === 0) {
+        if (title.trim().length === 0 || price <= 0 || date.trim().length === 0 || description.trim().length === 0) {
             console.error("Please fill out all the required fields");
             return;
         }
 
         const event = {title, price, date, description};
         console.log(event);
-        
+
+   
+        const requestBody = {
+            query: `
+                mutation {
+                    createEvent(eventInput: {title: "${title}", price: ${price}, date: "${date}", description: "${description}"}) {
+                        _id
+                        title
+                        description
+                        price
+                        date
+                        creator {
+                            _id
+                            email
+                        }
+                    }
+                }
+            `
+        };
+    
+        const token = this.context.token;
+
+        fetch('http://localhost:8000/graphql', {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        })
+        .then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Failed!');
+            } 
+
+            return res.json();
+        })
+        .then(resData => {
+            console.log(resData);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
     };
 
     modalCancelHandler = () => {
